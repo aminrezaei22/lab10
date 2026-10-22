@@ -1,0 +1,6 @@
+build*/
+*.o
+*.out
+docs/
+deck_bugs
+buggy_rooms
