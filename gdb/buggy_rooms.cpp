@@ -49,7 +49,12 @@ int main() {
   const Direction walk[] = {Direction::east, Direction::east, Direction::east,
                             Direction::west};
   for (Direction d : walk) {
-    current = move(current, d);
+    Room *next = move(current, d);
+    if (next == nullptr) {
+      std::cout << "There is no exit that way.\n";
+      continue;
+    }
+    current = next;
     describe(current);
   }
 
