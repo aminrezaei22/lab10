@@ -1,0 +1,19 @@
+digraph operator_assign {
+  node [fontname="Helvetica"];
+  start [shape=ellipse, label="operator=(const Deck &other)"];
+  self [shape=diamond, label="this == &other ?"];
+  free [shape=box, label="delete[] m_cards"];
+  alloc [shape=box, label="m_cards = new Card[other.m_size]\nm_size = other.m_size\nm_next = other.m_next"];
+  init [shape=box, label="i = 0"];
+  cond [shape=diamond, label="i < m_size ?"];
+  copy [shape=box, label="m_cards[i] = other.m_cards[i]"];
+  inc [shape=box, label="i = i + 1"];
+  ret [shape=ellipse, label="return *this"];
+  start -> self;
+  self -> ret [label="yes"];
+  self -> free [label="no"];
+  free -> alloc -> init -> cond;
+  cond -> copy [label="yes"];
+  copy -> inc -> cond;
+  cond -> ret [label="no"];
+}

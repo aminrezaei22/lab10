@@ -1,0 +1,18 @@
+digraph shallow_copy {
+  rankdir=LR;
+  node [shape=record, fontname="Helvetica"];
+  label="Deck after a SHALLOW copy (copy = original copies the pointer)";
+  labelloc=t;
+  subgraph cluster_stack {
+    label="stack";
+    original [label="{original : Deck|{<p> m_cards|m_size = 52|m_next = 0}}"];
+    copy [label="{copy : Deck|{<p> m_cards|m_size = 52|m_next = 0}}"];
+  }
+  subgraph cluster_heap {
+    label="heap";
+    arr [label="<c0> [0] AC|<c1> [1] 2C|<c2> [2] 3C|...|<c51> [51] KS", shape=record];
+  }
+  original:p -> arr:c0;
+  copy:p -> arr:c0;
+  note [shape=note, label="both decks point at the same array\nshuffling copy reorders original\ntwo destructors delete[] the same array"];
+}

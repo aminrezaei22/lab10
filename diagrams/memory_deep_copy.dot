@@ -1,0 +1,19 @@
+digraph deep_copy {
+  rankdir=LR;
+  node [shape=record, fontname="Helvetica"];
+  label="Deck after a DEEP copy (copy constructor does new[] and copies each card)";
+  labelloc=t;
+  subgraph cluster_stack {
+    label="stack";
+    original [label="{original : Deck|{<p> m_cards|m_size = 52|m_next = 0}}"];
+    copy [label="{copy : Deck|{<p> m_cards|m_size = 52|m_next = 0}}"];
+  }
+  subgraph cluster_heap {
+    label="heap";
+    arr1 [label="<c0> [0] AC|<c1> [1] 2C|<c2> [2] 3C|...|<c51> [51] KS"];
+    arr2 [label="<c0> [0] AC|<c1> [1] 2C|<c2> [2] 3C|...|<c51> [51] KS"];
+  }
+  original:p -> arr1:c0;
+  copy:p -> arr2:c0;
+  note [shape=note, label="each deck owns its own array\nshuffling copy leaves original alone\neach destructor frees its own array"];
+}

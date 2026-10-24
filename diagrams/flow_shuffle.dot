@@ -1,0 +1,16 @@
+digraph shuffle {
+  node [fontname="Helvetica"];
+  start [shape=ellipse, label="shuffle(gen)"];
+  init [shape=box, label="i = m_size - 1"];
+  cond [shape=diamond, label="i > 0 ?"];
+  pick [shape=box, label="j = random in [0, i]"];
+  swap [shape=box, label="swap m_cards[i] and m_cards[j]"];
+  dec [shape=box, label="i = i - 1"];
+  reset [shape=box, label="m_next = 0"];
+  stop [shape=ellipse, label="return"];
+  start -> init -> cond;
+  cond -> pick [label="yes"];
+  pick -> swap -> dec -> cond;
+  cond -> reset [label="no"];
+  reset -> stop;
+}
