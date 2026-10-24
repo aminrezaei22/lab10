@@ -11,17 +11,12 @@
 /// The number of cards in a full deck.
 inline constexpr int deck_size = 52;
 
-// Class invariant:
-//  m_cards points to a heap array of m_size cards that this deck owns and is
-//  the only owner of. m_size is deck_size (52). m_next is the index of the
-//  next card to deal and is always between 0 and m_size; when m_next == m_size
-//  the deck is empty.
+// Class invariant: m_cards points to a heap array of m_size cards owned by
+// this deck only, m_size is deck_size, and m_next is between 0 and m_size.
 //
-// Self-assignment:
-//  If operator= did not check for d = d, it would first delete[] m_cards, and
-//  then try to copy from other.m_cards, which is the same pointer that was
-//  just freed. The copy would read freed memory, the deck would end up holding
-//  garbage, and the destructor would later delete[] the array a second time.
+// Self-assignment: without the check, d = d would delete[] m_cards and then
+// copy from other.m_cards, which is that same freed array, so the deck would
+// hold garbage and the destructor would delete[] it a second time.
 
 /// A deck of playing cards stored in a heap array.
 class Deck {
